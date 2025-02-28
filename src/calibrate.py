@@ -1,9 +1,13 @@
 import os
+from pathlib import Path
 import numpy as np
 import cv2 as cv
 from glob import glob
 
-calibration_file = 'camera_params.csv'
+src_dir = Path(__file__).resolve().parent
+root_proj_dir = src_dir.parent
+
+calibration_file = str(src_dir) + '/camera_params.csv'
 
 checker_rows_cols = (7, 9)
 # prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0)
@@ -15,7 +19,7 @@ OpenCV documentation specifies "at least 10 test patterns for camera calibration
 source: https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html
 '''
 success_threshold = 10
-photos = glob('../photos/calibrate/*.jpg')
+photos = glob(str(root_proj_dir) + '/photos/calibrate/*.jpg')
 
 print("Found {} images to calibrate camera".format(len(photos)))
 

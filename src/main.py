@@ -1,3 +1,4 @@
+from pathlib import Path
 import cv2 as cv
 import numpy as np
 from glob import glob
@@ -6,7 +7,8 @@ import dt_apriltags as dt
 # Fetch camera params from csv file
 def get_camera_params():
     result = []
-    with open('camera_params.csv', 'r') as f:
+    src_dir = Path(__file__).resolve().parent
+    with open(str(src_dir) + '/camera_params.csv', 'r') as f:
         for line in f:
             nums = line.split(',')
             for n in nums:
@@ -16,7 +18,8 @@ def get_camera_params():
 
 # Returns a list of relative paths for every apriltag image 
 def get_files_of_tags():
-    return glob('../photos/tag36h11_200mm/*.jpg')
+    root_proj_dir = Path(__file__).resolve().parent.parent
+    return glob(str(root_proj_dir) + '/photos/tag36h11_200mm/*.jpg')
 
 # Shows a bright green bounding box around the apriltag (if found)
 def show_bounding_box(file, detector, camera_params, tag_size_meters):
